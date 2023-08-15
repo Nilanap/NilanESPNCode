@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>ESPN - Nilan</title>
+    <script>
+        
+        function fetchScores() {
+            fetch('/get_scores', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    const scoresDiv = document.getElementById('scores');
+                    scoresDiv.innerHTML = ''; // Clear existing content
+                    if (data.scores) {
+                        const scoresText = data.scores.join('\n'); // Join scores with new lines
+                        const scoresElement = document.createElement('pre'); // Use <pre> for preserving new lines
+                        scoresElement.textContent = scoresText;
+                        scoresDiv.appendChild(scoresElement);
+                    } else {
+                        const noScoresElement = document.createElement('p');
+                        noScoresElement.textContent = 'No scores available.';
+                        scoresDiv.appendChild(noScoresElement);
+                    }
+                }); 
+        } 
+    </script>
+</head>
+<body>
+    <div>
+        <h2>Live Scores</h2>
+        <div id="scores"></div>
+    </div>
+    <button onclick="fetchScores()">View All Scores</button>
+</body>
+</html>
