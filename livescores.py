@@ -5,6 +5,8 @@ from datetime import datetime, timedelta
 from pytz import timezone    
 
 
+
+
 url = "https://api.sofascore.com/api/v1/sport/football/events/live"
 
 payload = ""
@@ -60,7 +62,8 @@ for game in jsondata['events']:
 
         
         status_description = game['status']['description']
-        elapsed_minutes = calculate_elapsed_minutes(game_start_time, current_time)
+  nigga
+elapsed_minutes = calculate_elapsed_minutes(game_start_time, current_time)
 
         print(league, "\n", hometeam, homescore, " - ", awayscore, awayteam)
         if status_description == '2nd half':

@@ -6,8 +6,246 @@
     <meta name="viewport" content="width=device-initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>ESPN - Nilan</title>
-    <script>
+
+    <body>
+
+        <div class="container">
+          <h1 id="logo"><span>Nilan ESPN</span></h1>
+        </div>
+        <nav id="primary" class="nav">
+          <ul>
+            <li class="sports-menu"><a href="#">View All Sports</a></li>
+            <li class="sports-menu football"><a href="#">Football</a></li>
+            <li class="selcted"><a href="/templates/all_scores.html">Soccer</a></li>
+            <li class="sports-menu baseball"><a href="#">Baseball</a></li>
+          </ul>
+        </nav>
+        <nav id="secondary" class="nav">
+          <div class="container">
+            <ul>
+              <li><a href="/templates/epl_scores.html">English Premier League</a></li>
+              <li><a href="/templates/ucl_scores.html">UEFA Champions League</a></li>
+              <li><a href="#">NFL Football</a></li>
+              <li><a href="#">College Football</a></li>
+              <li><a href="#">MLB Baseball</a></li>
+            </ul>
+          </div>
+        </nav>
+      
+      
+              
+       </body>       
+    
+        <div id="fill"></div>
+        <div>
+            <h2>Live Scores</h2>
+            <div id="scores"></div>
+        </div>
+
         
+        <button onclick="fetchScores()">All Soccer Scores</button>
+        <a href="#" id="allScoresLink">All Soccer Scores</a>
+    <style>
+        #fill {
+  height:2000px;
+}
+
+* {
+	box-sizing:border-box;
+	padding:0;
+	margin:0;
+	-webkit-font-smoothing: subpixel-antialiased;
+  transition:all .25s ease-in-out;
+}
+
+.secondary-nav:hover > ul {
+  display: block;
+}
+
+.secondary-nav:hover {
+  border-bottom: 3px solid #b71c1c;
+}
+
+.sub-nav {
+  display: none;
+  position: absolute;
+  background: #fff;
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.3);
+  z-index: 90;
+  padding-left: 0;
+}
+
+.sub-nav li {
+  display: block;
+}
+
+.sub-nav li a {
+  color: #272727;
+  cursor: pointer;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.sub-nav li a:hover {
+  background-color: #eee;
+}
+
+
+.sports-menu:hover #secondary ul {
+  display: block;
+}
+
+.sports-menu.football:hover #secondary ul li.selected,
+.sports-menu.baseball:hover #secondary ul li.selected {
+  border-bottom: none;
+}
+
+.sports-menu.football:hover #secondary ul li.football-leagues,
+.sports-menu.baseball:hover #secondary ul li.baseball-leagues {
+  display: block;
+}
+
+html {
+	min-height:100%;
+}
+body {
+	height:100%;
+  background:#eee;
+	font-family: 'Open Sans', helvetica, arial, sans-serif;
+	font-size:16px;
+}
+
+#head {
+  position:relative;
+  width:100%;
+  display:block;
+  position:fixed;
+  top:0;
+}
+#head .container {
+  z-index:100;
+}
+.container {
+  width:960px;
+  margin:0 auto;
+  position:relative;
+}
+#logo {
+  color:#fff;
+  background:#c62828;
+  display:inline-block;
+  width:auto;
+  padding:10px 20px;
+  border-left:10px solid #b71c1c;
+  border-right:10px solid #b71c1c;
+  transform:skewX(-20deg);
+  float:none;
+  height:58px;
+}
+#logo:after {
+  content:"";
+  width:100%;
+  height:2px; 
+  background:#c62828;
+  position:absolute;
+  top:35%;
+  left:0px;
+}
+#logo span {
+  display:block;
+  transform:skewX(20deg);
+  text-transform:uppercase;
+}
+.nav {
+  width:100%;
+  padding:10px 0;
+  position:relative;
+  height:58px;
+}
+.nav:after, #primary ul:after {
+  content: "";
+  display: table;
+  clear:both;
+}
+#primary {
+  background:#272727;
+  color:#fff;
+  top:0px;
+}
+#primary ul {
+  display:block;
+  width:100%;
+  max-width:960px;
+  margin:0 auto;
+  padding-left:200px;
+  position:relative;
+}
+.nav ul li {
+  float:left;
+  line-height:38px;
+  text-align:center;
+  list-style-type:none;
+  height:48px;
+  position:relative;
+}
+#primary ul li a {
+  color:#fff;
+  cursor:pointer;
+  position:relative;
+  padding:0 10px;
+  text-decoration:none;
+}
+#primary ul li.selected:after {
+  content:"";
+  display:block;
+  position:absolute;
+  bottom:0px;
+  left:calc(50% - 10px);
+  width:0;
+  height:0;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #ffffff transparent;
+}
+#secondary {
+  background:#fff;
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.3);
+  z-index:90;
+  top:0;
+  padding-left:0;
+}
+#secondary ul li a {
+  color:#272727;
+  cursor:pointer;
+  position:relative;
+  padding:0 10px;
+  text-decoration:none;
+}
+#secondary ul li.selected {
+  border-bottom:3px solid #b71c1c;
+}
+    </style>
+    <script>
+
+            const footballNav = document.querySelector('.football-nav');
+            const baseballNav = document.querySelector('.baseball-nav');
+
+            footballNav.addEventListener('mouseover', () => {
+              footballNav.classList.add('selected');
+            });
+
+            footballNav.addEventListener('mouseout', () => {
+              footballNav.classList.remove('selected');
+            });
+
+            baseballNav.addEventListener('mouseover', () => {
+              baseballNav.classList.add('selected');
+            });
+
+            baseballNav.addEventListener('mouseout', () => {
+              baseballNav.classList.remove('selected');
+            });
+    
         function fetchScores() {
             fetch('/get_scores', { method: 'POST' })
                 .then(response => response.json())
@@ -27,12 +265,23 @@
                 }); 
         } 
     </script>
-</head>
-<body>
-    <div>
-        <h2>Live Scores</h2>
-        <div id="scores"></div>
-    </div>
-    <button onclick="fetchScores()">View All Scores</button>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+  $(window).scroll(function() {
+    if($(window).scrollTop() >= 200) {
+      $('#secondary').css({top:'-58px', paddingLeft:'400px'});
+    } else {
+      $('#secondary').css({top:'0px', paddingLeft:'0px'});
+    }
+  });
+});
+</script>
+
+    
+
+
+<button onclick="fetchScores()">All Soccer Scores</button>
 </body>
 </html>
